@@ -6,7 +6,7 @@ set -o nounset
 retry_with_backoff() {
   local func="$1"
   local sleep_time=10
-  local max_sleep=180
+  local max_sleep=600
 
   while [ "$sleep_time" -lt "$max_sleep" ]; do
     if "$func"; then
