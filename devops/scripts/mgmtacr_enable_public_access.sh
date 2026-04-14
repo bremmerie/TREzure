@@ -30,17 +30,17 @@ echo -e "\nEnabling public access on acr $ACR_NAME"
 # Enable public network access with explicit default action allow
 az acr update --resource-group "$RESOURCE_GROUP" --name "$ACR_NAME" --public-network-enabled true --default-action Allow --output none
 
-for ATTEMPT in {1..10}; do
+for ATTEMPT in {1..20}; do
     if is_public_access_enabled "$RESOURCE_GROUP" "$ACR_NAME"; then
     echo -e " ACR $ACR_NAME is now publicly accessible\n"
     return
     fi
 
-    echo " Unable to confirm public access on ACR $ACR_NAME after $ATTEMPT/10. Waiting for update to take effect..."
-    sleep 10
+    echo " Unable to confirm public access on ACR $ACR_NAME after $ATTEMPT/20. Waiting for update to take effect..."
+    sleep 30
 done
 
-echo -e "Error: Could not enable public access for $ACR_NAME after 10 attempts.\n"
+echo -e "Error: Could not enable public access for $ACR_NAME after 20 attempts.\n"
 echo -e "$LAST_PUBLIC_ACCESS_ERROR\n"
 exit 1
 }
@@ -63,14 +63,14 @@ echo -e "\nDisabling public access on ACR $ACR_NAME"
 # Disable public network access with explicit default action deny
 az acr update --resource-group "$RESOURCE_GROUP" --name "$ACR_NAME" --public-network-enabled false --default-action Deny --output none
 
-for ATTEMPT in {1..10}; do
+for ATTEMPT in {1..20}; do
     if ! is_public_access_enabled "$RESOURCE_GROUP" "$ACR_NAME"; then
     echo -e " Public access has been disabled successfully\n"
     return
     fi
 
-    echo " Unable to confirm public access is disabled on sACR $ACR_NAME after $ATTEMPT/10. Waiting for update to take effect..."
-    sleep 10
+    echo " Unable to confirm public access is disabled on ACR $ACR_NAME after $ATTEMPT/20. Waiting for update to take effect..."
+    sleep 30
 done
 
 echo -e "Error: Could not disable public access for $ACR_NAME after 10 attempts.\n"
