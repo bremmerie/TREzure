@@ -538,10 +538,10 @@ resource "azurerm_monitor_diagnostic_setting" "eventgrid_custom_topics" {
 
 resource "azurerm_monitor_diagnostic_setting" "eventgrid_system_topics" {
   for_each = {
-    (azurerm_eventgrid_system_topic.import_inprogress_blob_created.name) = azurerm_eventgrid_system_topic.import_inprogress_blob_created.id,
-    (azurerm_eventgrid_system_topic.import_rejected_blob_created.name)   = azurerm_eventgrid_system_topic.import_rejected_blob_created.id,
-    (azurerm_eventgrid_system_topic.import_blocked_blob_created.name)    = azurerm_eventgrid_system_topic.import_blocked_blob_created.id,
-    (azurerm_eventgrid_system_topic.export_approved_blob_created.name)   = azurerm_eventgrid_system_topic.export_approved_blob_created.id,
+    (local.import_inprogress_sys_topic_name) = azurerm_eventgrid_system_topic.import_inprogress_blob_created.id,
+    (local.import_rejected_sys_topic_name)   = azurerm_eventgrid_system_topic.import_rejected_blob_created.id,
+    (local.import_blocked_sys_topic_name)    = azurerm_eventgrid_system_topic.import_blocked_blob_created.id,
+    (local.export_approved_sys_topic_name)   = azurerm_eventgrid_system_topic.export_approved_blob_created.id,
   }
 
   name                       = "${each.key}-diagnostics"
