@@ -35,7 +35,7 @@ function kv_add_network_exception() {
   fi
 
   local ATTEMPT=1
-  local MAX_ATTEMPTS=10
+  local MAX_ATTEMPTS=20
 
   while true; do
 
@@ -53,7 +53,7 @@ function kv_add_network_exception() {
     fi
 
     echo " Unable to access keyvault $KV_NAME after $ATTEMPT/$MAX_ATTEMPTS. Waiting for network rules to take effect."
-    sleep 5
+    sleep 30
     ((ATTEMPT++))
 
   done
